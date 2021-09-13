@@ -1,0 +1,32 @@
+#wrapper{
+    display: flex;
+}
+#table {
+    font-family: 'Raleway',sans-serif; 
+    font-size: 20px; 
+    margin-left: 2%;
+    display: inline-block;
+    width: 48%;
+}
+#camera {
+    font-family: 'Raleway',sans-serif; 
+    font-size: 20px; 
+    margin-right: 2%;
+    display: inline-block;
+    width:48%;
+}
+
+.heading {
+    text-align: center;
+    font-family: 'Raleway',sans-serif; 
+    font-size: 62px; 
+}
+.button {
+    font-family: 'Raleway',sans-serif; 
+    font-size: 16px; 
+    margin-left: 2%;
+    border-radius: 12px;
+    background-color: red; 
+    width: 100px;
+    height: 40px;
+}
