@@ -1,7 +1,7 @@
 body 
 {
     background-color: grey;
-    background-image: url("Login.jpg");
+    background-image: url("Login.jpeg");
     background-size: cover;
 
 }
@@ -23,7 +23,6 @@ input{
     box-sizing: border-box;
     display: inline-block;
 }
-
 #login {
     display: flex;
     justify-content: center;

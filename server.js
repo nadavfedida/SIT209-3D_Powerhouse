@@ -5,7 +5,7 @@ const base = `${__dirname}/public`;
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-    res.sendFile(`${base}/Login-page.html`);
+    res.sendFile(`${base}/Lighting.html`);
   });
 
 app.get('/Login-page', (req, res) => {
@@ -13,7 +13,7 @@ app.get('/Login-page', (req, res) => {
 });
 
 app.get('/welcome-page', (req, res) => {
-    res.sendFile(`${base}/welcome-page.html`);
+    res.sendFile(`${base}/Lighting.html`);
 });
 
 app.get('/Rooms', (req, res) => {

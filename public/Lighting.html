@@ -5,6 +5,7 @@
     <meta name="description" content="A web page about IoT Applications" />
     <meta name="author" content="ENTER YOUR NAME HERE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="welcome-page.css" />
     <style>
       .footer {
          position: fixed;
@@ -15,39 +16,44 @@
          color: white;
          text-align: center;
       }
+      h1 {display:inline};
       </style>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Lighting</title>
   </head>
-  <div class="container">
+  <body>
     <div id="navbar"></div>
-    <body>
-      <h1>Register Lighting Device</h1> 
-      <div>
-          <div class="form-group">
-              <label for="floor">Floor</label>
-              <input type="text" class="form-control" id="floor" />
-            </div>
-            
-            <div class="form-group">
-              <label for="name">Device Name</label>
-              <input type="text" class="form-control" id="name" />
-            </div>
-            
-            <button class="btn btn-success" id="add-device">Save</button>
+      <div class = "center">
+        <h1>3D Printer Safety</h1> 
       </div>
-        <h1>Devices</h1> 
-        <div>
-        <table id="devices" class="table">
-            <thead>
-              <tr>
-                <th>Floor</th>
-                <th>Device</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+      <button class="btn btn-success" id="add-device">Save</button>
+        <div id="wrapper">
+        <div id="table">
+          <body>
+            <h1>Devices</h1> 
+            <table id="devices" class="table">
+              <thead>
+                <tr>
+                  <th>Bed Temperature</th>
+                  <th>Nozel Temperature</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
+        </div>
+        </div>
+          <div id="camera">
+              <h1>Live camera</h2>
+              <div id="container">
+                <video src="" id="video" style="width:700px; height: 350px;" autoplay="true"></video>
+                <canvas style="display:none;" id="preview"></canvas>
+                <div id="logger"></div>
+              </div>
+          </div>
+        </body>
+
           <div class="footer">
             <p>Created by: Lachlan Exton</p>
             <p>Copyright Lachlan Exton 2021</p>
@@ -55,5 +61,53 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="app.js"></script>
+    <script type="text/javascript">
+      var canvas = document.getElementById("preview");
+      var context = canvas.getContext('2d');
+  
+      canvas.width = 900;
+      canvas.height = 700;
+  
+      context.width = canvas.width;
+      context.height = canvas.height;
+  
+      var video = document.getElementById("video");
+      var socket = io();
+  
+      function logger(msg){
+          $('#logger').text(msg);
+      }
+  
+      function loadCamera(stream){
+        try {
+            video.srcObject = stream;
+            } catch (error) {
+         video.src = URL.createObjectURL(stream);
+            }
+         logger("Camera connected");
+      }
+  
+      function loadFail(){
+          logger("Camera not connected");
+      }
+  
+      function viewVideo(video,context){
+          context.drawImage(video,0,0,context.width,context.height);
+          socket.emit('stream',canvas.toDataURL('image/webp'));
+      }
+  
+      $(function(){
+          navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msgGetUserMedia );
+      
+          if(navigator.getUserMedia){
+              navigator.getUserMedia({video: true, audio: false},loadCamera,loadFail);
+          }
+  
+          setInterval(function(){
+              viewVideo(video,context);
+          },5);
+      });
+  
+  </script>
   </body>
 </html>
